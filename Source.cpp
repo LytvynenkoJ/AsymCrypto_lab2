@@ -12,7 +12,8 @@ int main()
 		cout << "Выберете, пожалуйста, один из предложенных вариантов:        " << endl;
 		cin >> choise;
 	}
-
+	string e;
+	string n;
 	int len = 10;
 	if (choise==0)
 	{
@@ -22,13 +23,11 @@ int main()
 	}
 	else
 	{
-		string n;
 		cout << "Введите, пожалуйста ключ n" << endl;
 		cin >> n;
 		len = n.length() / 2 - 2;
 		GenerateKeyPair(len);
 		nA = mpz_class(n, 16);
-		string e;
 		cout << "Введите, пожалуйста ключ e" << endl;
 		cin >> e;
 		eA = mpz_class(e, 16);
@@ -156,6 +155,49 @@ int main()
 		cout << "S1 = " << S1.get_mpz_t() << endl << endl;
 		cout << "----------------------------------------" << endl;
 		ReceiveKey(dB, eA, nB, nA);
+	}
+	else
+	{
+		len = n.length() / 2 + 2;
+		GenerateKeyPair(len);
+		nA = mpz_class(n, 16);
+		eA = mpz_class(e, 16);
+		cout << "nA = " << nA.get_mpz_t() << endl << endl;
+		cout << "eA = " << eA.get_mpz_t() << endl << endl;
+		cout << "nB = " << nB.get_mpz_t() << endl << endl;
+		cout << "eB = " << eB.get_mpz_t() << endl << endl;
+		cout << "===========================================" << endl << endl;
+		cout << "Вы можете получить ключ" << endl;
+		cout << "Пользователь А отправил вам вам ключ и подпись, введите их, пожалуйста: " << endl;
+		cout << "k1 = ";
+		string k1_str;
+		cin >> k1_str;
+		cout << "S1 = ";
+		string S1_str;
+		cin >> S1_str;
+		k1 = mpz_class(k1_str, 16);
+		S1 = mpz_class(S1_str, 16);
+		ReceiveKey(dB, eA, nB, nA);
+		cout << "----------------------------------------" << endl << endl;
+
+		len = n.length() / 2 - 2;
+		GenerateKeyPair(len);
+		nA = mpz_class(n, 16);
+		eA = mpz_class(e, 16);
+		cout << "nA = " << nA.get_mpz_t() << endl << endl;
+		cout << "eA = " << eA.get_mpz_t() << endl << endl;
+		cout << "nB = " << nB.get_mpz_t() << endl << endl;
+		cout << "eB = " << eB.get_mpz_t() << endl << endl;
+		cout << "===========================================" << endl << endl;
+		cout << "Вы можете отправить ключ" << endl;
+		number = randomNum(2 * (len - 2));
+		num = arrToStr(number, 2 * (len - 2));
+		M = mpz_class(num, 16);
+		cout << "k = " << M.get_mpz_t() << endl << endl;
+		SendKey(M, eA, dB, nA, nB);
+		cout << "k1 = " << k1.get_mpz_t() << endl << endl;
+		cout << "S1 = " << S1.get_mpz_t() << endl << endl;
+		
 	}
 	return 0;
 }
